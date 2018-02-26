@@ -15,17 +15,28 @@ public class Encryptor {
         return substitutedText;
     }
 
-    private static String permutate(String text, Integer[] key) {
+    public static String permutate(String text, Integer[] key) {
         String permutatedText = "";
+        int keyLength = key.length;
         while (text.length() > 0) {
-            String permutatedResult = "";
-            String tmpStr = (String) text.subSequence(0, key.length);
-            for (int i = 0; i < key.length; i++) {
-                permutatedResult += tmpStr.charAt(key[i]);
+            String permutateText = "";
+            if ((text.length() / keyLength) > 0) {
+                String tempStr = (String) text.subSequence(0, keyLength);
+                System.out.println("size"+tempStr.length());
+                for (int i = 0; i < keyLength; i++) {
+                    permutateText += tempStr.charAt(key[i]);
+                }
+                permutatedText += permutateText;
+                text = text.substring(keyLength);
+            } else {
+                int j = 0;
+                while (j < text.length()) {
+                    if (key[j] < text.length()) {
+                        permutateText += text.charAt(key[j]);
+                        j++;
+                    }
+                }
             }
-            permutatedText += permutatedResult;
-            text = text.substring(key.length);
-
         }
         return permutatedText;
     }

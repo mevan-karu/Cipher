@@ -15,21 +15,25 @@ public class Decryptor {
         return resubstitutedText;
     }
 
-    private static String repermutate(String text, Integer[] key) {
+    public static String repermutate(String text, Integer[] key) {
         String repermutatedText = "";
+        int keyLength = key.length;
         while (text.length() > 0) {
             String repermutateText = "";
-            String tempStr = (String) text.subSequence(0, 4);
-
-            for (int m = 0; m < 4; m++) {
-                for (int k = 0; k < key.length; k++) {
-                    if (m == key[k]) {
-                        repermutateText += tempStr.charAt(k);
+            if ((text.length() / keyLength) > 0) {
+                String tempStr = (String) text.subSequence(0, keyLength);
+                for (int m = 0; m < keyLength; m++) {
+                    for (int k = 0; k < keyLength; k++) {
+                        if (m == key[k]) {
+                            repermutateText += tempStr.charAt(k);
+                        }
                     }
                 }
+            } else {
+
             }
             repermutatedText += repermutateText;
-            text = text.substring(4);
+            text = text.substring(keyLength);
         }
         return repermutatedText;
     }

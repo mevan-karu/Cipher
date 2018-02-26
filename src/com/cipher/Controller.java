@@ -80,7 +80,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private static Integer[] createKey(String key) {
+    public static Integer[] createKey(String key) {
         ArrayList<Integer> keyArray = new ArrayList<>();
         int i = 0;
         while (keyArray.size() < key.length()) {
@@ -97,7 +97,7 @@ public class Controller implements Initializable {
             }
             i++;
         }
-        return (Integer[]) keyArray.toArray();
+        return keyArray.toArray(new Integer[keyArray.size()]);
     }
 
     @Override
