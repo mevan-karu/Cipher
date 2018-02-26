@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class Main extends Application {
 
     @Override
@@ -18,9 +20,16 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        //launch(args);
-        String x = Encryptor.permutate("mevan karunanayake", Controller.createKey("mevan"));
-        System.out.println(x);
-        System.out.println(Decryptor.repermutate(x, Controller.createKey("mevan")));
+
+        File encryptDir = new File("/" + System.getProperty("user.dir") + "/encrypted");
+        File decryptDir = new File("/" + System.getProperty("user.dir") + "/decrypted");
+        if (!encryptDir.exists()) {
+            encryptDir.mkdir();
+        }
+        if (!decryptDir.exists()) {
+            decryptDir.mkdir();
+        }
+
+        launch(args);
     }
 }

@@ -39,7 +39,14 @@ public class Controller implements Initializable {
     void decrypt(MouseEvent event) {
         if (validate()) {
             if (file != null) {
-
+                String text = readFile(file);
+                String key = txtKey.getText().trim();
+                String path = "decrypted/decrypt_"+file.getName();
+                try {
+                    saveFile(Decryptor.decrypt(text, createKey(key)), path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 lblStatus.setText("Select a text file to decrypt");
             }
@@ -52,6 +59,13 @@ public class Controller implements Initializable {
         if (validate()) {
             if (file != null) {
                 String text = readFile(file);
+                String key = txtKey.getText().trim();
+                String path = "encrypted/encrypt_"+file.getName();
+                try {
+                    saveFile(Encryptor.encrypt(text, createKey(key)), path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             } else {
                 lblStatus.setText("Select a text file to decrypt");
@@ -110,11 +124,8 @@ public class Controller implements Initializable {
     private String readFile(File file) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
-
         try {
-
             bufferedReader = new BufferedReader(new FileReader(file));
-
             String text;
             while ((text = bufferedReader.readLine()) != null) {
                 stringBuffer.append(text);
@@ -133,7 +144,17 @@ public class Controller implements Initializable {
         return stringBuffer.toString();
     }
 
-    private void saveFile(String text) {
+    private void saveFile(String text, String path) throws IOException {
+        File saveFile = new File(System.getProperty("user.dir")+"/"+path);
+        if (!saveFile.exists()){
 
+        }
+        FileOutputStream os = new FileOutputStream(saveFile);
+        OutputStreamWriter outWritter = new OutputStreamWriter(os);
+        Writer bufferedWriter = new BufferedWriter(outWritter);
+        bufferedWriter.write(text);
+        bufferedWriter.close();
+        outWritter.close();
+        os.close();
     }
 }

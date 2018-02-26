@@ -27,12 +27,10 @@ public class Encryptor {
                 }
                 text = text.substring(keyLength);
             } else {
-                System.out.println(text.length());
                 int j = 0;
                 while (j < keyLength) {
                     if (key[j] < text.length()) {
                         permutateText += text.charAt(key[j]);
-                        System.out.println(j);
                     }
                     j++;
                 }

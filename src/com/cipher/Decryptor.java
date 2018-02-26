@@ -32,10 +32,15 @@ public class Decryptor {
                 text = text.substring(keyLength);
             } else {
                 for (int m = 0; m < text.length(); m++) {
+                    int n = 0;
                     for (int k = 0; k < keyLength; k++) {
-                        if ((key[k] < text.length()) && (m == key[k])) {
-                            repermutateText += text.charAt(k);
+                        if (key[k]< text.length()){
+                            if ((m == key[k])) {
+                                repermutateText += text.charAt(n);
+                            }
+                            n+=1;
                         }
+
                     }
                 }
                 text = "";
