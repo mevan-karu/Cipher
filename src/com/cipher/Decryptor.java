@@ -2,7 +2,7 @@ package com.cipher;
 
 public class Decryptor {
 
-    public static String decrypt(String text, int[] key) {
+    public static String decrypt(String text, Integer[] key) {
         return resubstitute(repermutate(text, key));
     }
 
@@ -15,7 +15,7 @@ public class Decryptor {
         return resubstitutedText;
     }
 
-    private static String repermutate(String text, int[] key) {
+    private static String repermutate(String text, Integer[] key) {
         String repermutatedText = "";
         while (text.length() > 0) {
             String repermutateText = "";

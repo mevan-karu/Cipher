@@ -9,12 +9,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 
     @FXML
     private TextField txtKey;
@@ -45,6 +45,12 @@ public class Controller implements Initializable{
     @FXML
     void encrypt(MouseEvent event) {
         if (validate()) {
+            if (file!=null){
+                String text = readFile(file);
+
+            } else {
+                lblStatus.setText("Select a text file to encrypt/decrypt");
+            }
 
         }
 
@@ -54,11 +60,9 @@ public class Controller implements Initializable{
     void selectText(MouseEvent event) {
         Stage stage = (Stage) btnOpen.getScene().getWindow();
         file = fileChooser.showOpenDialog(stage);
-        if (file !=null){
-
+        if (file != null) {
+            lblStatus.setText(file.getName() + " selected");
         }
-
-
     }
 
     private boolean validate() {
@@ -71,7 +75,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private static ArrayList<Integer> createKey(String key) {
+    private static Integer[] createKey(String key) {
         ArrayList<Integer> keyArray = new ArrayList<>();
         int i = 0;
         while (keyArray.size() < key.length()) {
@@ -88,14 +92,42 @@ public class Controller implements Initializable{
             }
             i++;
         }
-        return keyArray;
+        return (Integer[]) keyArray.toArray();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt"
-                , "*.txt" ));
+                , "*.txt"));
         fileChooser.setTitle("Select text file");
+    }
+
+    private String readFile(File file) {
+        StringBuilder stringBuffer = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+
+            bufferedReader = new BufferedReader(new FileReader(file));
+
+            String text;
+            while ((text = bufferedReader.readLine()) != null) {
+                stringBuffer.append(text);
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return stringBuffer.toString();
     }
 }

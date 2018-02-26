@@ -2,7 +2,7 @@ package com.cipher;
 
 public class Encryptor {
 
-    public static String encrypt(String text, int[] key) {
+    public static String encrypt(String text, Integer[] key) {
         return permutate(substitute(text), key);
     }
 
@@ -15,7 +15,7 @@ public class Encryptor {
         return substitutedText;
     }
 
-    private static String permutate(String text, int[] key) {
+    private static String permutate(String text, Integer[] key) {
         String permutatedText = "";
         while (text.length() > 0) {
             String permutatedResult = "";
