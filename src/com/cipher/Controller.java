@@ -91,7 +91,6 @@ public class Controller implements Initializable {
                     val++;
                 } else {
                     keyArray.add(x);
-                    System.out.println(x);
                     break;
                 }
             }

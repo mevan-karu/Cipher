@@ -29,11 +29,18 @@ public class Decryptor {
                         }
                     }
                 }
+                text = text.substring(keyLength);
             } else {
-
+                for (int m = 0; m < text.length(); m++) {
+                    for (int k = 0; k < keyLength; k++) {
+                        if ((key[k] < text.length()) && (m == key[k])) {
+                            repermutateText += text.charAt(k);
+                        }
+                    }
+                }
+                text = "";
             }
             repermutatedText += repermutateText;
-            text = text.substring(keyLength);
         }
         return repermutatedText;
     }

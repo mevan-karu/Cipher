@@ -19,8 +19,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //launch(args);
-        String x = Encryptor.encrypt("mevan karunanayakeee", Controller.createKey("mevan"));
+        String x = Encryptor.permutate("mevan karunanayake", Controller.createKey("mevan"));
         System.out.println(x);
-        System.out.println(Decryptor.decrypt(x, Controller.createKey("mevan")));
+        System.out.println(Decryptor.repermutate(x, Controller.createKey("mevan")));
     }
 }

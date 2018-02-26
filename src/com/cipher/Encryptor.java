@@ -22,21 +22,23 @@ public class Encryptor {
             String permutateText = "";
             if ((text.length() / keyLength) > 0) {
                 String tempStr = (String) text.subSequence(0, keyLength);
-                System.out.println("size"+tempStr.length());
                 for (int i = 0; i < keyLength; i++) {
                     permutateText += tempStr.charAt(key[i]);
                 }
-                permutatedText += permutateText;
                 text = text.substring(keyLength);
             } else {
+                System.out.println(text.length());
                 int j = 0;
-                while (j < text.length()) {
+                while (j < keyLength) {
                     if (key[j] < text.length()) {
                         permutateText += text.charAt(key[j]);
-                        j++;
+                        System.out.println(j);
                     }
+                    j++;
                 }
+                text = "";
             }
+            permutatedText += permutateText;
         }
         return permutatedText;
     }
