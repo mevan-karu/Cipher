@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
-    private TextField txtKey;
+    private PasswordField txtKey;
 
     @FXML
     private Button btnEncrypt;
@@ -41,7 +41,7 @@ public class Controller implements Initializable {
             if (file != null) {
                 String text = readFile(file);
                 String key = txtKey.getText().trim();
-                String path = "decrypted/decrypt_"+file.getName();
+                String path = "decrypted/decrypt_" + file.getName();
                 try {
                     saveFile(Decryptor.decrypt(text, createKey(key)), path);
                 } catch (IOException e) {
@@ -52,6 +52,7 @@ public class Controller implements Initializable {
             }
 
         }
+        txtKey.clear();
     }
 
     @FXML
@@ -60,18 +61,18 @@ public class Controller implements Initializable {
             if (file != null) {
                 String text = readFile(file);
                 String key = txtKey.getText().trim();
-                String path = "encrypted/encrypt_"+file.getName();
+                String path = "encrypted/encrypt_" + file.getName();
                 try {
                     saveFile(Encryptor.encrypt(text, createKey(key)), path);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             } else {
                 lblStatus.setText("Select a text file to decrypt");
             }
 
         }
+        txtKey.clear();
 
     }
 
@@ -145,8 +146,8 @@ public class Controller implements Initializable {
     }
 
     private void saveFile(String text, String path) throws IOException {
-        File saveFile = new File(System.getProperty("user.dir")+"/"+path);
-        if (!saveFile.exists()){
+        File saveFile = new File(System.getProperty("user.dir") + "/" + path);
+        if (!saveFile.exists()) {
 
         }
         FileOutputStream os = new FileOutputStream(saveFile);
