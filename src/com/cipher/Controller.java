@@ -38,6 +38,11 @@ public class Controller implements Initializable {
     @FXML
     void decrypt(MouseEvent event) {
         if (validate()) {
+            if (file != null) {
+
+            } else {
+                lblStatus.setText("Select a text file to decrypt");
+            }
 
         }
     }
@@ -45,11 +50,11 @@ public class Controller implements Initializable {
     @FXML
     void encrypt(MouseEvent event) {
         if (validate()) {
-            if (file!=null){
+            if (file != null) {
                 String text = readFile(file);
 
             } else {
-                lblStatus.setText("Select a text file to encrypt/decrypt");
+                lblStatus.setText("Select a text file to decrypt");
             }
 
         }
@@ -115,7 +120,6 @@ public class Controller implements Initializable {
             while ((text = bufferedReader.readLine()) != null) {
                 stringBuffer.append(text);
             }
-
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -127,7 +131,10 @@ public class Controller implements Initializable {
                 ex.printStackTrace();
             }
         }
-
         return stringBuffer.toString();
+    }
+
+    private void saveFile(String text) {
+
     }
 }
