@@ -39,11 +39,11 @@ public class Controller implements Initializable {
     void decrypt(MouseEvent event) {
         if (validate()) {
             if (file != null) {
-                String text = readFile(file);
                 String key = txtKey.getText().trim();
+                String text = decryptFile(file, key);
                 String path = "decrypted/decrypt_" + file.getName();
                 try {
-                    saveFile(Decryptor.decrypt(text, createKey(key)), path);
+                    saveFile(text, path);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -59,11 +59,11 @@ public class Controller implements Initializable {
     void encrypt(MouseEvent event) {
         if (validate()) {
             if (file != null) {
-                String text = readFile(file);
                 String key = txtKey.getText().trim();
+                String text = encryptFile(file, key);
                 String path = "encrypted/encrypt_" + file.getName();
                 try {
-                    saveFile(Encryptor.encrypt(text, createKey(key)), path);
+                    saveFile(text, path);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -90,8 +90,11 @@ public class Controller implements Initializable {
         if (key.length() > 10 || key.length() < 4) {
             lblStatus.setText("Key length should be between 4 and 10");
             return false;
-        } else {
+        } else if (key.matches("[A-Za-z0-9]+")) {
             return true;
+        } else{
+            lblStatus.setText("Key should contain only numbers and letters");
+            return false;
         }
     }
 
@@ -122,14 +125,14 @@ public class Controller implements Initializable {
         fileChooser.setTitle("Select text file");
     }
 
-    private String readFile(File file) {
+    private String encryptFile(File file, String key) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(file));
             String text;
             while ((text = bufferedReader.readLine()) != null) {
-                stringBuffer.append(text);
+                stringBuffer.append(Encryptor.encrypt(text, createKey(key))+System.lineSeparator());
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -142,6 +145,31 @@ public class Controller implements Initializable {
                 ex.printStackTrace();
             }
         }
+        System.out.println(stringBuffer.toString());
+        return stringBuffer.toString();
+    }
+
+    private String decryptFile(File file, String key) {
+        StringBuilder stringBuffer = new StringBuilder();
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(file));
+            String text;
+            while ((text = bufferedReader.readLine()) != null) {
+                stringBuffer.append(Decryptor.decrypt(text, createKey(key))+System.lineSeparator());
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(stringBuffer.toString());
         return stringBuffer.toString();
     }
 
