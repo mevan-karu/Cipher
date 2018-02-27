@@ -120,7 +120,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt"
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text File"
                 , "*.txt"));
         fileChooser.setTitle("Select text file");
     }
@@ -145,7 +145,6 @@ public class Controller implements Initializable {
                 ex.printStackTrace();
             }
         }
-        System.out.println(stringBuffer.toString());
         return stringBuffer.toString();
     }
 
@@ -169,7 +168,6 @@ public class Controller implements Initializable {
                 ex.printStackTrace();
             }
         }
-        System.out.println(stringBuffer.toString());
         return stringBuffer.toString();
     }
 
